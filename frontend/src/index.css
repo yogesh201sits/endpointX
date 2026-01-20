@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Developer-focused dark theme design system */
+    --background: 225 15% 11%;  /* Deep navy #1E1E2F */
+    --foreground: 220 9% 95%;   /* Light gray #F3F4F6 */
+
+    --card: 225 15% 13%;        /* Slightly elevated panels */
+    --card-foreground: 220 9% 95%;
+
+    --popover: 225 15% 13%;
+    --popover-foreground: 220 9% 95%;
+
+    --primary: 238 77% 64%;     /* Indigo accent #6366F1 */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 225 15% 18%;   /* Elevated secondary */
+    --secondary-foreground: 220 9% 85%;
+
+    --muted: 225 15% 18%;
+    --muted-foreground: 220 9% 65%;
+
+    --accent: 225 15% 18%;
+    --accent-foreground: 220 9% 95%;
+
+    --success: 142 71% 45%;     /* Green #22C55E */
+    --success-foreground: 0 0% 100%;
+
+    --warning: 43 96% 56%;      /* Amber warning */
+    --warning-foreground: 0 0% 0%;
+
+    --destructive: 0 84% 60%;   /* Red error #EF4444 */
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 225 15% 20%;      /* Subtle borders */
+    --input: 225 15% 15%;       /* Input backgrounds */
+    --ring: 238 77% 64%;        /* Focus rings match primary */
+
+    --radius: 1rem;             /* Rounded corners */
+
+    /* Code editor colors */
+    --code-bg: 225 15% 9%;
+    --code-border: 225 15% 22%;
+    
+    /* Panel elevations */
+    --panel-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+
+  /* Light mode overrides (though dark-first design) */
+  .light {
+    --background: 0 0% 100%;
+    --foreground: 225 15% 15%;
+    --card: 0 0% 100%;
+    --card-foreground: 225 15% 15%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
