@@ -326,7 +326,7 @@ const fileContents = {
   "server.js": { content: serverCode, language: "javascript" },
   "package.json": { content: packageJson, language: "json" },
   ".env": { 
-    content: `MONGODB_URI=mongodb+srv://<user>:<pass>@cluster0.mongodb.net/generatedApi?retryWrites=true&w=majority
+    content: `MONGODB_URI=
 PORT=3000
 NODE_ENV=development`,
     language: "shell"

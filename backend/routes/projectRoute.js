@@ -11,7 +11,7 @@ import { generateCodeFromSchema } from '../ai_layer/codeGenerator.js';
 
 const router = express.Router();
 
-const SANDBOX_ID = await createSandbox(); 
+// const SANDBOX_ID = await createSandbox(); 
 
 const BASE_DIR = "/home/user/backend-app";
 
