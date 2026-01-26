@@ -12,35 +12,7 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "sqlite"
-  url      = "file:./dev.db"
-}
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean  @default(false)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  authorId  Int?
-  author    User?    @relation(fields: [authorId], references: [id])
-  comments  Comment[]
-}
-
-model User {
-  id    Int    @id @default(autoincrement())
-  email String @unique
-  name  String?
-  posts Post[]
-}
-
-model Comment {
-  id      Int    @id @default(autoincrement())
-  content String
-  postId  Int
-  post    Post   @relation(fields: [postId], references: [id])
 }`);
 
   return (
@@ -49,7 +21,7 @@ model Comment {
       <Card className="shadow-panel">
         <CardHeader className="pb-3">
           <CardTitle className="flex items-center gap-2 text-lg">
-            <Sparkles className="h-5 w-5 text-primary" />
+            <Sparkles className="h-5 w-5 stroke-current text-green-500" />
             AI Schema Builder
           </CardTitle>
         </CardHeader>

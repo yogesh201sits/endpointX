@@ -1,6 +1,6 @@
 import express from 'express';
 import mongoose from 'mongoose';
-import projectRoutes from './routes/project.routes.js';
+import projectRoutes from './routes/projectRoute.js';
 
 const app = express();
 app.use(express.json());

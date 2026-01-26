@@ -40,13 +40,7 @@ const RouteSchema = new mongoose.Schema(
  */
 const ProjectSchema = new mongoose.Schema(
   {
-    projectId: {
-      type: String,
-      required: true,
-      unique: true,
-      index: true
-    },
-
+    
     prompt: {
       type: String
     },
@@ -59,6 +53,11 @@ const ProjectSchema = new mongoose.Schema(
       type: Map,
       of: String,
       required: true
+    },
+
+    packages: {
+      type: [String],
+      default: []
     },
 
     /**

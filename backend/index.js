@@ -6,16 +6,19 @@ import { uploadFiles, installPackages, startServer } from './utils.js';
 import { generateUserApiSchema } from './ai_layer/userApiSchema.js';
 import { generateCodeFromSchema } from './ai_layer/codeGenerator.js';
 import { generateTempDataFiles } from './ai_layer/dataGenerator.js';
+import{createSandbox} from './sandbox.js'
 
-const SANDBOX_ID = "idzh4j69ry2q0t0ot83r8";
+const SANDBOX_ID = await createSandbox(); 
+
 const BASE_DIR = "/home/user/backend-app";
 
 async function setupBackend() {
+  
   // 1️⃣ Connect to existing sandbox
   const sbx = await Sandbox.connect(SANDBOX_ID);
 
-  // 2️⃣ Generate structured schema + routes
-  const schemaOutput = await generateUserApiSchema();
+    // 2️⃣ Generate structured schema + routes
+  const schemaOutput = await generateUserApiSchema("Generate an Express CRUD API specification for a **Hotel** entity for a **travel booking website**.");
   console.log('Generated Schema & Routes:');
   console.log(JSON.stringify(schemaOutput, null, 2));
 
@@ -29,6 +32,7 @@ async function setupBackend() {
     schemaOutput,
     schemaOutput.routes
   );
+
   console.log('Generated Code & Packages:');
   console.log(JSON.stringify(codeOutput, null, 2));
 
@@ -49,13 +53,9 @@ async function setupBackend() {
     cwd: '/home/user/backend-app',   // <- where server.js actually is
     timeoutMs: 0 
   });
-  // const host = await startServer(sbx, {
-  //   entry: 'server.js',
-  //   port: 3000,
-  //   cwd: BASE_DIR
-  // });
-
+ 
   console.log("Backend accessible at:", host);
+
 }
 
 setupBackend().catch(console.error);

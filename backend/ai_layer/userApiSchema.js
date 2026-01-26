@@ -1,7 +1,7 @@
 import { z } from "zod";
 import { StructuredOutputParser } from "@langchain/core/output_parsers";
-import { SystemMessage, HumanMessage } from "@langchain/core/messages";
 import { llm } from "./llm.js";
+import { PromptTemplate } from "@langchain/core/prompts";
 
 /**
  * Zod schema for API specification
@@ -33,30 +33,37 @@ export const userApiSchema = z.object({
 const parser = StructuredOutputParser.fromZodSchema(userApiSchema);
 
 /**
- * Generates structured CRUD API schema
+ * Prompt template for generating API schema from user prompt
  */
-export async function generateUserApiSchema() {
-  const messages = [
-    new SystemMessage(
-      "You are an expert backend engineer. Return ONLY valid JSON. No explanations."
-    ),
-    new HumanMessage(
-      `
-Generate an Express CRUD API specification for a **Hotel** entity
-for a **travel booking website**.
+const generateApiPrompt = PromptTemplate.fromTemplate(`
+You are an expert backend engineer. Return ONLY valid JSON. No explanations.
+
+Generate an Express CRUD API specification based on the following user prompt:
+
+"{user_prompt}"
 
 Rules:
-- Group routes by basePath
+- Extract entities from the user prompt
+- Each entity MUST have exactly ONE basePath
+- Group all CRUD operations under the same basePath
 - Do NOT repeat basePath
-- Each basePath must contain a methods array
+- Each basePath must contain a "methods" array
 - Follow the schema strictly
 
-${parser.getFormatInstructions()}
-`
-    )
-  ];
+{format_instructions}
+`);
 
-  const response = await llm.invoke(messages);
+/**
+ * Generates structured CRUD API schema from user input
+ */
+export async function generateUserApiSchema(userPrompt) {
+  const prompt = await generateApiPrompt.format({
+    user_prompt: userPrompt,
+    format_instructions: parser.getFormatInstructions()
+  });
+
+  // Using raw invoke with chat-like input
+  const response = await llm.invoke([{ role: "user", content: prompt }]);
 
   return parser.parse(response.content);
 }

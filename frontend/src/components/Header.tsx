@@ -19,7 +19,7 @@ export function Header() {
           <div className="flex items-center justify-center w-12 h-8 md:w-16 md:h-10 rounded-lg bg-transparent">
             <img src="logo.png" alt="My Project Logo" className="object-contain w-full h-full" />
           </div>
-          <h1 className="text-xl font-bold text-foreground">OneClickAPI</h1>
+          <h1 className="text-xl font-bold text-foreground">Endpoint X</h1>
         </div>
 
         {/* Mobile Navigation */}
