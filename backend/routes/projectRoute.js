@@ -11,7 +11,8 @@ import { generateCodeFromSchema } from '../ai_layer/codeGenerator.js';
 
 const router = express.Router();
 
-// const SANDBOX_ID = await createSandbox(); 
+const SANDBOX_ID = await createSandbox(); 
+// const SANDBOX_ID = "ixl26jhk5x85c9enexwxd"; 
 
 const BASE_DIR = "/home/user/backend-app";
 
@@ -51,21 +52,21 @@ router.post('/generate', async (req, res) => {
     const url = sbx.getHost(3000);
 
     /* 7️⃣ Persist project */
-    const project = await Project.create({
-      prompt,
-      schema: schemaOutput,
-      routes: schemaOutput.routes,
-      files: codeOutput.files,
-      packages,
-      sandbox: {
-        url,
-        status: 'running'
-      }
-    });
+    // const project = await Project.create({
+    //   prompt,
+    //   schema: schemaOutput,
+    //   routes: schemaOutput.routes,
+    //   files: codeOutput.files,
+    //   packages,
+    //   sandbox: {
+    //     url,
+    //     status: 'running'
+    //   }
+    // });
 
     /* 8️⃣ Respond to frontend */
     res.json({
-      projectId: project._id,
+      projectId: "0",
       url,
       files: codeOutput.files,
       routes: schemaOutput.routes

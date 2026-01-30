@@ -2,65 +2,69 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
-All colors MUST be HSL.
-*/
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap');
 
 @layer base {
   :root {
-    /* Developer-focused dark theme design system */
-    --background: 225 15% 11%;  /* Deep navy #1E1E2F */
-    --foreground: 220 9% 95%;   /* Light gray #F3F4F6 */
+    --background: 160 10% 6%;
+    --foreground: 150 10% 92%;
 
-    --card: 225 15% 13%;        /* Slightly elevated panels */
-    --card-foreground: 220 9% 95%;
+    --card: 160 10% 8%;
+    --card-foreground: 150 10% 92%;
 
-    --popover: 225 15% 13%;
-    --popover-foreground: 220 9% 95%;
+    --popover: 160 12% 10%;
+    --popover-foreground: 150 10% 92%;
 
-    --primary: 238 77% 64%;     /* Indigo accent #6366F1 */
-    --primary-foreground: 0 0% 100%;
+    --primary: 142 76% 46%;
+    --primary-foreground: 160 10% 6%;
 
-    --secondary: 225 15% 18%;   /* Elevated secondary */
-    --secondary-foreground: 220 9% 85%;
+    --secondary: 160 10% 14%;
+    --secondary-foreground: 150 10% 92%;
 
-    --muted: 225 15% 18%;
-    --muted-foreground: 220 9% 65%;
+    --muted: 160 8% 16%;
+    --muted-foreground: 150 8% 55%;
 
-    --accent: 225 15% 18%;
-    --accent-foreground: 220 9% 95%;
+    --accent: 142 60% 40%;
+    --accent-foreground: 150 10% 92%;
 
-    --success: 142 71% 45%;     /* Green #22C55E */
-    --success-foreground: 0 0% 100%;
-
-    --warning: 43 96% 56%;      /* Amber warning */
-    --warning-foreground: 0 0% 0%;
-
-    --destructive: 0 84% 60%;   /* Red error #EF4444 */
+    --destructive: 0 72% 55%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 225 15% 20%;      /* Subtle borders */
-    --input: 225 15% 15%;       /* Input backgrounds */
-    --ring: 238 77% 64%;        /* Focus rings match primary */
+    --border: 160 8% 18%;
+    --input: 160 8% 18%;
+    --ring: 142 76% 46%;
 
-    --radius: 1rem;             /* Rounded corners */
+    --radius: 0.5rem;
 
-    /* Code editor colors */
-    --code-bg: 225 15% 9%;
-    --code-border: 225 15% 22%;
+    /* Custom semantic tokens */
+    --surface-elevated: 160 10% 10%;
+    --surface-overlay: 160 12% 12%;
     
-    /* Panel elevations */
-    --panel-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+    /* Method colors */
+    --method-get: 210 100% 60%;
+    --method-post: 142 76% 46%;
+    --method-put: 45 100% 55%;
+    --method-delete: 0 72% 55%;
+    
+    /* Status colors */
+    --status-running: 142 76% 46%;
+    --status-stopped: 0 72% 55%;
+    --status-pending: 45 100% 55%;
+
+    /* Sidebar */
+    --sidebar-background: 160 10% 7%;
+    --sidebar-foreground: 150 8% 75%;
+    --sidebar-primary: 142 76% 46%;
+    --sidebar-primary-foreground: 160 10% 6%;
+    --sidebar-accent: 160 10% 12%;
+    --sidebar-accent-foreground: 150 10% 92%;
+    --sidebar-border: 160 8% 16%;
+    --sidebar-ring: 142 76% 46%;
   }
 
-  /* Light mode overrides (though dark-first design) */
-  .light {
-    --background: 0 0% 100%;
-    --foreground: 225 15% 15%;
-    --card: 0 0% 100%;
-    --card-foreground: 225 15% 15%;
-    --border: 220 13% 91%;
-    --input: 220 13% 91%;
+  .dark {
+    --background: 160 10% 6%;
+    --foreground: 150 10% 92%;
   }
 }
 
@@ -69,7 +73,88 @@ All colors MUST be HSL.
     @apply border-border;
   }
 
+  html {
+    color-scheme: dark;
+  }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Inter', sans-serif;
+  }
+
+  code, pre, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
+  }
+}
+
+@layer components {
+  .panel-header {
+    @apply flex items-center justify-between px-3 py-2 border-b border-border bg-card text-xs font-medium uppercase tracking-wider text-muted-foreground;
+  }
+
+  .method-badge {
+    @apply px-2 py-0.5 rounded text-xs font-semibold uppercase;
+  }
+
+  .method-get {
+    @apply bg-[hsl(var(--method-get)/0.15)] text-[hsl(var(--method-get))];
+  }
+
+  .method-post {
+    @apply bg-[hsl(var(--method-post)/0.15)] text-[hsl(var(--method-post))];
+  }
+
+  .method-put {
+    @apply bg-[hsl(var(--method-put)/0.15)] text-[hsl(var(--method-put))];
+  }
+
+  .method-delete {
+    @apply bg-[hsl(var(--method-delete)/0.15)] text-[hsl(var(--method-delete))];
+  }
+
+  .status-indicator {
+    @apply w-2 h-2 rounded-full;
+  }
+
+  .status-running {
+    @apply bg-[hsl(var(--status-running))] shadow-[0_0_8px_hsl(var(--status-running)/0.6)];
+  }
+
+  .status-stopped {
+    @apply bg-[hsl(var(--status-stopped))];
+  }
+
+  .tree-item {
+    @apply flex items-center gap-2 px-2 py-1 rounded text-sm cursor-pointer transition-colors hover:bg-secondary;
+  }
+
+  .tree-item-active {
+    @apply bg-secondary text-foreground;
+  }
+
+  .ide-scrollbar::-webkit-scrollbar {
+    @apply w-2 h-2;
+  }
+
+  .ide-scrollbar::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+
+  .ide-scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-full;
+  }
+
+  .ide-scrollbar::-webkit-scrollbar-thumb:hover {
+    @apply bg-muted-foreground/40;
+  }
+
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary) / 0.3), 0 0 40px hsl(var(--primary) / 0.1);
+  }
+}
+
+@layer utilities {
+  .text-gradient-primary {
+    @apply bg-gradient-to-r from-[hsl(142,76%,46%)] to-[hsl(160,70%,50%)] bg-clip-text text-transparent;
   }
 }

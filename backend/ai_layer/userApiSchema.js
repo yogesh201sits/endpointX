@@ -6,7 +6,7 @@ import { PromptTemplate } from "@langchain/core/prompts";
 /**
  * Zod schema for API specification
  */
-export const userApiSchema = z.object({
+const userApiSchema = z.object({
   entity: z.string(),
 
   fields: z.array(
@@ -19,42 +19,43 @@ export const userApiSchema = z.object({
 
   routes: z.array(
     z.object({
-      basePath: z.string(),
-      methods: z.array(
-        z.object({
-          method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]),
-          description: z.string()
-        })
-      )
+      method: z.enum(["GET", "POST", "PUT", "PATCH", "DELETE"]),
+      path: z.string(),
+      description: z.string()
     })
   )
 });
 
+/**
+ * 3️⃣ Structured parser
+ */
 const parser = StructuredOutputParser.fromZodSchema(userApiSchema);
 
 /**
- * Prompt template for generating API schema from user prompt
+ * 4️⃣ Prompt template
  */
 const generateApiPrompt = PromptTemplate.fromTemplate(`
-You are an expert backend engineer. Return ONLY valid JSON. No explanations.
+You are an expert backend engineer.
+Return ONLY valid JSON. No explanations.
 
-Generate an Express CRUD API specification based on the following user prompt:
-
-"{user_prompt}"
+Generate an Express REST API specification.
 
 Rules:
-- Extract entities from the user prompt
-- Each entity MUST have exactly ONE basePath
-- Group all CRUD operations under the same basePath
-- Do NOT repeat basePath
-- Each basePath must contain a "methods" array
-- Follow the schema strictly
+- Routes MUST be a flat array
+- Each route must include method, full path, description
+- Use ":id" explicitly where needed
+- Follow REST conventions strictly
+- Do NOT group routes
+- Do NOT omit CRUD operations
+
+User prompt:
+"{user_prompt}"
 
 {format_instructions}
 `);
 
 /**
- * Generates structured CRUD API schema from user input
+ * 5️⃣ Generator function
  */
 export async function generateUserApiSchema(userPrompt) {
   const prompt = await generateApiPrompt.format({
@@ -62,8 +63,10 @@ export async function generateUserApiSchema(userPrompt) {
     format_instructions: parser.getFormatInstructions()
   });
 
-  // Using raw invoke with chat-like input
-  const response = await llm.invoke([{ role: "user", content: prompt }]);
+  const response = await llm.invoke([
+    { role: "user", content: prompt }
+  ]);
 
   return parser.parse(response.content);
 }
+

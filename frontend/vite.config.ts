@@ -8,9 +8,8 @@ export default defineConfig(({ mode }) => ({
   server: {
     host: "::",
     port: 8080,
-    headers: {
-      "Cross-Origin-Opener-Policy": "same-origin",
-      "Cross-Origin-Embedder-Policy": "require-corp",
+    hmr: {
+      overlay: false,
     },
   },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),

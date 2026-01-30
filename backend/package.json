@@ -12,6 +12,7 @@
     "@e2b/code-interpreter": "^2.3.3",
     "@langchain/core": "^1.1.16",
     "@langchain/groq": "^1.0.3",
+    "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "mongoose": "^9.1.5",

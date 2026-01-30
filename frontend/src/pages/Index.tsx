@@ -1,39 +1,86 @@
-import { Header } from "@/components/Header";
-import { LeftPanel } from "@/components/LeftPanel";
-import { CenterPanel } from "@/components/CenterPanel";
-import { RightPanel } from "@/components/RightPanel";
-import { Footer } from "@/components/Footer";
-import { useEffect } from "react";
+import { useState } from 'react';
+import { PanelLeft, PanelRight } from 'lucide-react';
+import Navbar from '@/components/Navbar';
+import LeftSidebar from '@/components/LeftSidebar';
+import CenterWorkspace from '@/components/CenterWorkspace';
+import RightSidebar from '@/components/RightSidebar';
+import BottomConsole from '@/components/BottomConsole';
+import { cn } from '@/lib/utils';
 
 const Index = () => {
-  // Set dark theme by default
-  useEffect(() => {
-    document.documentElement.classList.remove('light');
-  }, []);
+  const [leftOpen, setLeftOpen] = useState(true);
+  const [rightOpen, setRightOpen] = useState(true);
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Header />
+    <div className="h-screen w-screen flex flex-col overflow-hidden">
+      {/* Top Navbar */}
+      <Navbar 
+        leftOpen={leftOpen} 
+        rightOpen={rightOpen}
+        onToggleLeft={() => setLeftOpen(!leftOpen)}
+        onToggleRight={() => setRightOpen(!rightOpen)}
+      />
       
-      {/* Main workspace */}
-      <div className="flex h-[calc(100vh-4rem-4rem)] md:h-[calc(100vh-4rem)]">
-        {/* Left Panel - Hidden on mobile, shown on lg+ screens */}
-        <div className="w-80 flex-shrink-0 hidden lg:block">
-          <LeftPanel />
+      {/* Main Content */}
+      <div className="flex-1 flex min-h-0 relative">
+        {/* Left Sidebar */}
+        <div
+          className={cn(
+            'border-r border-border flex-shrink-0 transition-all duration-300 overflow-hidden',
+            leftOpen ? 'w-80' : 'w-0'
+          )}
+        >
+          {leftOpen && (
+            <div className="w-80 h-full">
+              <LeftSidebar />
+            </div>
+          )}
         </div>
         
-        {/* Center Panel - Full width on mobile */}
+        {/* Left Toggle Button (when closed) */}
+        {!leftOpen && (
+          <button
+            onClick={() => setLeftOpen(true)}
+            className="absolute left-2 top-1/2 -translate-y-1/2 p-2 bg-card border border-border rounded-lg shadow-lg hover:bg-secondary transition-colors z-10"
+            title="Open Left Panel"
+          >
+            <PanelLeft className="w-4 h-4 text-primary" />
+          </button>
+        )}
+        
+        {/* Center - Code Workspace */}
         <div className="flex-1 min-w-0">
-          <CenterPanel />
+          <CenterWorkspace />
         </div>
         
-        {/* Right Panel - Hidden on mobile, shown on xl+ screens */}
-        <div className="w-96 flex-shrink-0 hidden xl:block">
-          <RightPanel />
+        {/* Right Toggle Button (when closed) */}
+        {!rightOpen && (
+          <button
+            onClick={() => setRightOpen(true)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 p-2 bg-card border border-border rounded-lg shadow-lg hover:bg-secondary transition-colors z-10"
+            title="Open Right Panel"
+          >
+            <PanelRight className="w-4 h-4 text-primary" />
+          </button>
+        )}
+        
+        {/* Right Sidebar */}
+        <div
+          className={cn(
+            'border-l border-border flex-shrink-0 transition-all duration-300 overflow-hidden',
+            rightOpen ? 'w-80' : 'w-0'
+          )}
+        >
+          {rightOpen && (
+            <div className="w-80 h-full">
+              <RightSidebar />
+            </div>
+          )}
         </div>
       </div>
       
-      <Footer />
+      {/* Full-width Console at Bottom */}
+      <BottomConsole />
     </div>
   );
 };
