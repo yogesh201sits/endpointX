@@ -30,7 +30,7 @@ const Navbar = ({ leftOpen, rightOpen, onToggleLeft, onToggleRight }: NavbarProp
           {/* <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center glow-primary">
             <Terminal className="w-5 h-5 text-primary-foreground" />
           </div> */}
-          <div className='w-20 h-15'>
+          <div className=' relative w-[15vh] h-[25vh] top-10'>
             <img src="logo2.png" style={{borderRadius:"50%"}} alt="" />
           </div>
             

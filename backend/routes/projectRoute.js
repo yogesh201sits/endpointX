@@ -52,18 +52,18 @@ router.post('/generate', async (req, res) => {
     const url = sbx.getHost(3000);
 
     /* 7️⃣ Persist project */
-    // const project = await Project.create({
-    //   prompt,
-    //   schema: schemaOutput,
-    //   routes: schemaOutput.routes,
-    //   files: codeOutput.files,
-    //   packages,
-    //   sandbox: {
-    //     url,
-    //     status: 'running'
-    //   }
-    // });
-
+    const project = await Project.create({
+      prompt,
+      schema: schemaOutput,
+      routes: schemaOutput.routes,
+      files: JSON.stringify(codeOutput.files),
+      packages,
+      sandbox: {
+        url,
+        status: 'running'
+      }
+    });
+    console.log(project)
     /* 8️⃣ Respond to frontend */
     res.json({
       projectId: "0",
@@ -90,7 +90,7 @@ router.post('/:id/rerun', async (req, res) => {
 
     const sbx = await Sandbox.connect(SANDBOX_ID);
 
-    await uploadFiles(sbx, project.files, BASE_DIR);
+    await uploadFiles(sbx, JSON.parse(project.files), BASE_DIR);
     await installPackages(sbx, project.packages || [], BASE_DIR);
 
     await sbx.commands.run('node server.js', {
@@ -100,15 +100,15 @@ router.post('/:id/rerun', async (req, res) => {
     });
 
     const url = sbx.getHost(3000);
+    console.log(url)
+    // project.sandbox = {
+    //   sandboxId: SANDBOX_ID,
+    //   url,
+    //   status: 'running'
+    // };
+    // await project.save();
 
-    project.sandbox = {
-      sandboxId: SANDBOX_ID,
-      url,
-      status: 'running'
-    };
-    await project.save();
-
-    res.json({ url });
+    res.send("good");
 
   } catch (err) {
     console.error(err);

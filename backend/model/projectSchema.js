@@ -23,13 +23,18 @@ const MethodSchema = new mongoose.Schema(
  */
 const RouteSchema = new mongoose.Schema(
   {
-    basePath: {
+    method: {
+      type: String,
+      enum: ["GET", "POST", "PUT", "PATCH", "DELETE"],
+      required: true
+    },
+    path: {
       type: String,
       required: true
     },
-    methods: {
-      type: [MethodSchema],
-      default: []
+    description: {
+      type: String,
+      required: true
     }
   },
   { _id: false }
@@ -50,8 +55,7 @@ const ProjectSchema = new mongoose.Schema(
      * { "server.js": "...", "routes/postRoutes.js": "..." }
      */
     files: {
-      type: Map,
-      of: String,
+      type: String,
       required: true
     },
 
