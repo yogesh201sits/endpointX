@@ -16,27 +16,57 @@ app.get("/", (req, res) => {
   res.send("hello");
 });
 
+
 app.post("/test", async (req, res) => {
   try {
-    const { url } = req.body;
+    const { url, method, body } = req.body;
 
-    console.log("🔥 URL RECEIVED FROM FRONTEND:", url);
+    console.log("=================================");
+    console.log("🔥 REQUEST RECEIVED FROM FRONTEND");
+    console.log("URL    :", url);
+    console.log("METHOD :", method);
+    console.log("BODY   :", body);
+    console.log("=================================");
 
-    const response = await fetch(url);
+    let response;
+
+    if (method === "GET") {
+      response = await fetch(url);
+    }
+    else if (method === "POST") {
+      response = await fetch(url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    }
+    else if (method === "DELETE") {
+      response = await fetch(url, {
+        method: "DELETE",
+      });
+    }
+    else if (method === "PUT") {
+      response = await fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+    }
+
+    console.log("🔥 RESPONSE STATUS:", response.status);
+
     const data = await response.json();
 
-    console.log("🔥 DATA FROM FETCH:", data);
+    console.log("🔥 DATA FROM API:", data);
 
-    res.json({
-      fetchedFrom: url,
-      data: data,
-    });
+    res.json({ data });
 
-  } catch (error) {
-    console.error("ERROR:", error);
-    res.status(500).json({ error: error.message });
+  } catch (err) {
+    console.error("❌ PROXY ERROR:", err.message);
+    res.status(500).json({ error: err.message });
   }
 });
+
 
 
 
