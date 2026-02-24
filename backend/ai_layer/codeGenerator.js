@@ -1,6 +1,6 @@
 import { ChatPromptTemplate } from '@langchain/core/prompts';
 import { StructuredOutputParser } from '@langchain/core/output_parsers';
-import { llm } from './llm.js';
+import { llm} from './llm.js';
 import { z } from 'zod';
 
 /**
@@ -37,6 +37,8 @@ Routes:
 {routes}
 
 Instructions:
+
+Instructions:
 - Return JSON only
 - Files should include controllers, routes, models as needed
 -Generate a temporary data JS file for these entities with 10 sample entries each and use that add that in data folder
@@ -47,6 +49,8 @@ Instructions:
 - Use port 3000 crate all db related files but in server.js dont do any db opeartions you will have folder called data so for each entity there will be js object in separte files e.g for hotel /data/hotels.js so use this although create all models folder db config folder but in serve.js use this and also makes updates in this objects not in db 
 -dont use uuid for any other like this
 -when requiring package use .js e.g const hotels = require('../data/hotels.js');
+-dont add .js in front of package names
+-do in mvc structure
 {format_instructions}`
     ]
   ]);

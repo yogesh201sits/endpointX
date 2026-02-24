@@ -27,19 +27,17 @@ const Navbar = ({ leftOpen, rightOpen, onToggleLeft, onToggleRight }: NavbarProp
         
         {/* Logo & Brand */}
         <div className="flex items-center gap-3">
-          {/* <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center glow-primary">
-            <Terminal className="w-5 h-5 text-primary-foreground" />
-          </div> */}
           <div className=' relative w-[15vh] h-[25vh] top-10'>
             <img src="logo2.png" style={{borderRadius:"50%"}} alt="" />
           </div>
             
-
           <span className="text-lg font-bold tracking-tight">
             <span className="text-gradient-primary">Endpoint</span>
             <span className="text-foreground ">X</span>
           </span>
+          
         </div>
+        
       </div>
       
       {/* Center - Project Actions */}

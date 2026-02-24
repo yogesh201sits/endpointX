@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { StructuredOutputParser } from "@langchain/core/output_parsers";
-import { llm } from "./llm.js";
+import { llm2 } from "./llm.js";
 import { PromptTemplate } from "@langchain/core/prompts";
 
 /**
@@ -63,7 +63,7 @@ export async function generateUserApiSchema(userPrompt) {
     format_instructions: parser.getFormatInstructions()
   });
 
-  const response = await llm.invoke([
+  const response = await llm2.invoke([
     { role: "user", content: prompt }
   ]);
 
