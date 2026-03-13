@@ -1,4 +1,3 @@
-```markdown
 # 🚀 EndpointX
 
 **From Prompt → Live Backend in Seconds**
@@ -201,14 +200,3 @@ If you like the project, consider **starring the repository**. It helps the proj
 ```
 
 ---
-
-If you want, I can also make a **🔥 “Top 1% GitHub style README”** with:
-
-- badges
-- architecture diagram
-- GIF demo
-- AI workflow diagram
-- better repo structure
-
-That version looks **much more impressive to recruiters**.
-```
