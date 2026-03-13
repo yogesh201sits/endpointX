@@ -11,7 +11,7 @@ Instead of manually creating servers, routes, controllers, and database logic, E
 
 ## 📸 Demo
 
-![EndpointX Demo](./frontend/public/demo.png)
+![EndpointX Demo](https://raw.githubusercontent.com/yogesh201sits/endpointX/main/frontend/public/demo.png)
 
 ---
 
